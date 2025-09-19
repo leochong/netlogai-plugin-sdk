@@ -1,0 +1,227 @@
+{
+  "name": "performance_plugin",
+  "display_name": "Network Performance Monitoring Plugin",
+  "version": "1.0.0",
+  "api_version": "1.0",
+  "type": "performance",
+  "entry_point": "performance_plugin.dll",
+  "author": {
+    "name": "NetLogAI Team",
+    "email": "plugins@netlogai.com",
+    "website": "https://netlogai.com"
+  },
+  "description": "Comprehensive network performance monitoring plugin for bandwidth analysis, latency tracking, and resource utilization monitoring.",
+  "long_description": "The Performance Monitoring Plugin provides real-time and historical analysis of network performance metrics. Features include bandwidth utilization tracking, interface performance monitoring, CPU and memory usage analysis, latency measurement, error rate detection, and performance baseline establishment. Generates detailed performance reports and alerts on threshold violations.",
+  "capabilities": [
+    "log_analysis",
+    "real_time_monitoring",
+    "performance_monitoring",
+    "alerting",
+    "reporting",
+    "data_export"
+  ],
+  "supported_devices": [
+    "cisco-ios",
+    "cisco-nxos",
+    "cisco-asa",
+    "juniper-junos",
+    "arista-eos",
+    "hp-procurve",
+    "generic-snmp",
+    "generic-syslog"
+  ],
+  "configuration": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "cpu_threshold": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 100,
+          "default": 80,
+          "description": "CPU utilization threshold for alerting (%)"
+        },
+        "memory_threshold": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 100,
+          "default": 85,
+          "description": "Memory utilization threshold for alerting (%)"
+        },
+        "interface_utilization_threshold": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 100,
+          "default": 90,
+          "description": "Interface bandwidth utilization threshold (%)"
+        },
+        "latency_threshold": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10000,
+          "default": 100,
+          "description": "Latency threshold for alerting (ms)"
+        },
+        "error_rate_threshold": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 50,
+          "default": 1.0,
+          "description": "Interface error rate threshold (%)"
+        },
+        "analysis_window_minutes": {
+          "type": "number",
+          "minimum": 5,
+          "maximum": 1440,
+          "default": 30,
+          "description": "Time window for performance analysis (minutes)"
+        },
+        "baseline_enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable performance baseline tracking"
+        },
+        "baseline_window_hours": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 168,
+          "default": 24,
+          "description": "Time window for baseline calculation (hours)"
+        }
+      }
+    },
+    "defaults": {
+      "cpu_threshold": 80,
+      "memory_threshold": 85,
+      "interface_utilization_threshold": 90,
+      "latency_threshold": 100,
+      "error_rate_threshold": 1.0,
+      "analysis_window_minutes": 30,
+      "baseline_enabled": true,
+      "baseline_window_hours": 24
+    },
+    "required_settings": []
+  },
+  "commands": [
+    {
+      "name": "performance_report",
+      "description": "Generate comprehensive performance analysis report",
+      "parameters": [
+        {
+          "name": "device",
+          "type": "string",
+          "required": false,
+          "description": "Specific device name for targeted analysis"
+        },
+        {
+          "name": "timespan",
+          "type": "string",
+          "required": false,
+          "description": "Time span for analysis (e.g., '1h', '24h', '7d')"
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Report format (json, html, csv)"
+        }
+      ]
+    },
+    {
+      "name": "bandwidth_analysis",
+      "description": "Analyze bandwidth utilization patterns",
+      "parameters": [
+        {
+          "name": "interface",
+          "type": "string",
+          "required": false,
+          "description": "Specific interface for analysis"
+        },
+        {
+          "name": "threshold",
+          "type": "number",
+          "required": false,
+          "description": "Custom utilization threshold (%)"
+        }
+      ]
+    },
+    {
+      "name": "establish_baseline",
+      "description": "Establish performance baseline for devices",
+      "parameters": [
+        {
+          "name": "device",
+          "type": "string",
+          "required": false,
+          "description": "Device name for baseline establishment"
+        },
+        {
+          "name": "window",
+          "type": "string",
+          "required": false,
+          "description": "Time window for baseline (e.g., '24h', '7d')"
+        }
+      ]
+    },
+    {
+      "name": "top_talkers",
+      "description": "Identify top bandwidth consumers",
+      "parameters": [
+        {
+          "name": "count",
+          "type": "number",
+          "required": false,
+          "description": "Number of top talkers to return (default: 10)"
+        }
+      ]
+    }
+  ],
+  "permissions": {
+    "network_access": false,
+    "file_system_access": true,
+    "system_commands": false,
+    "device_configuration": false
+  },
+  "license": "Commercial",
+  "homepage": "https://netlogai.com/plugins/performance",
+  "repository": "https://github.com/netlogai/performance-plugin",
+  "keywords": [
+    "performance",
+    "bandwidth",
+    "monitoring",
+    "utilization",
+    "latency",
+    "throughput",
+    "capacity-planning",
+    "qos"
+  ],
+  "minimum_netlogai_version": "1.0.0",
+  "resources": {
+    "memory_mb": 256,
+    "cpu_intensive": false
+  },
+  "metadata": {
+    "supported_metrics": [
+      "cpu_utilization",
+      "memory_utilization",
+      "interface_utilization",
+      "packet_loss",
+      "latency",
+      "jitter",
+      "throughput",
+      "error_rates"
+    ],
+    "reporting_formats": [
+      "json",
+      "html",
+      "csv",
+      "pdf"
+    ],
+    "chart_types": [
+      "line_graph",
+      "bar_chart",
+      "histogram",
+      "heat_map"
+    ]
+  }
+}

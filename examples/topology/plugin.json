@@ -1,0 +1,258 @@
+{
+  "name": "topology_plugin",
+  "display_name": "Network Topology Discovery Plugin",
+  "version": "1.0.0",
+  "api_version": "1.0",
+  "type": "topology",
+  "entry_point": "topology_plugin.dll",
+  "author": {
+    "name": "NetLogAI Team",
+    "email": "plugins@netlogai.com",
+    "website": "https://netlogai.com"
+  },
+  "description": "Intelligent network topology discovery and mapping plugin for automated device discovery, connection analysis, and network visualization.",
+  "long_description": "The Network Topology Discovery Plugin provides comprehensive network mapping capabilities including automated device discovery through log analysis, connection relationship mapping, hierarchy detection, subnet grouping, and network visualization. Features include CDP/LLDP parsing, routing table analysis, VLAN discovery, redundancy analysis, and interactive topology diagrams generation in multiple formats.",
+  "capabilities": [
+    "log_analysis",
+    "device_discovery",
+    "topology_mapping",
+    "visualization",
+    "reporting",
+    "data_export"
+  ],
+  "supported_devices": [
+    "cisco-ios",
+    "cisco-nxos",
+    "cisco-asa",
+    "juniper-junos",
+    "arista-eos",
+    "hp-procurve",
+    "mikrotik",
+    "ubiquiti",
+    "generic-snmp",
+    "generic-syslog"
+  ],
+  "configuration": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "discovery_protocols": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["cdp", "lldp", "ospf", "bgp", "arp"]
+          },
+          "default": ["cdp", "lldp"],
+          "description": "Network discovery protocols to analyze"
+        },
+        "auto_discovery_enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic device discovery"
+        },
+        "discovery_interval_hours": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 168,
+          "default": 6,
+          "description": "Interval for automatic topology discovery (hours)"
+        },
+        "subnet_detection_enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic subnet detection and grouping"
+        },
+        "hierarchy_detection_enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable network hierarchy detection (core/distribution/access)"
+        },
+        "stale_device_timeout_days": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 30,
+          "default": 7,
+          "description": "Days after which devices are considered stale"
+        },
+        "visualization_layout": {
+          "type": "string",
+          "enum": ["hierarchical", "force_directed", "circular", "grid"],
+          "default": "hierarchical",
+          "description": "Default layout algorithm for topology visualization"
+        },
+        "include_endpoints": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include endpoint devices (hosts/servers) in topology"
+        }
+      }
+    },
+    "defaults": {
+      "discovery_protocols": ["cdp", "lldp"],
+      "auto_discovery_enabled": true,
+      "discovery_interval_hours": 6,
+      "subnet_detection_enabled": true,
+      "hierarchy_detection_enabled": true,
+      "stale_device_timeout_days": 7,
+      "visualization_layout": "hierarchical",
+      "include_endpoints": false
+    },
+    "required_settings": []
+  },
+  "commands": [
+    {
+      "name": "topology_discover",
+      "description": "Initiate network topology discovery",
+      "parameters": [
+        {
+          "name": "protocol",
+          "type": "string",
+          "required": false,
+          "description": "Specific discovery protocol (cdp, lldp, ospf, bgp)"
+        },
+        {
+          "name": "subnet",
+          "type": "string",
+          "required": false,
+          "description": "Limit discovery to specific subnet (e.g., 192.168.1.0/24)"
+        }
+      ]
+    },
+    {
+      "name": "topology_diagram",
+      "description": "Generate network topology diagram",
+      "parameters": [
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Output format (ascii, graphviz, mermaid, svg, png)"
+        },
+        {
+          "name": "layout",
+          "type": "string",
+          "required": false,
+          "description": "Layout algorithm (hierarchical, force_directed, circular)"
+        },
+        {
+          "name": "include_details",
+          "type": "boolean",
+          "required": false,
+          "description": "Include detailed device information"
+        }
+      ]
+    },
+    {
+      "name": "topology_export",
+      "description": "Export topology data in various formats",
+      "parameters": [
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Export format (json, xml, csv, graphml)"
+        },
+        {
+          "name": "include_subnets",
+          "type": "boolean",
+          "required": false,
+          "description": "Include subnet information in export"
+        }
+      ]
+    },
+    {
+      "name": "path_analysis",
+      "description": "Analyze network path between devices",
+      "parameters": [
+        {
+          "name": "source",
+          "type": "string",
+          "required": true,
+          "description": "Source device name or IP"
+        },
+        {
+          "name": "destination",
+          "type": "string",
+          "required": true,
+          "description": "Destination device name or IP"
+        },
+        {
+          "name": "show_redundant",
+          "type": "boolean",
+          "required": false,
+          "description": "Show redundant paths"
+        }
+      ]
+    },
+    {
+      "name": "hierarchy_analysis",
+      "description": "Analyze and display network hierarchy",
+      "parameters": [
+        {
+          "name": "detail_level",
+          "type": "string",
+          "required": false,
+          "description": "Detail level (summary, detailed, full)"
+        }
+      ]
+    }
+  ],
+  "permissions": {
+    "network_access": true,
+    "file_system_access": true,
+    "system_commands": false,
+    "device_configuration": false
+  },
+  "license": "Commercial",
+  "homepage": "https://netlogai.com/plugins/topology",
+  "repository": "https://github.com/netlogai/topology-plugin",
+  "keywords": [
+    "topology",
+    "discovery",
+    "mapping",
+    "visualization",
+    "cdp",
+    "lldp",
+    "network-diagram",
+    "hierarchy",
+    "subnets"
+  ],
+  "minimum_netlogai_version": "1.0.0",
+  "resources": {
+    "memory_mb": 192,
+    "cpu_intensive": false
+  },
+  "metadata": {
+    "supported_protocols": [
+      "cdp",
+      "lldp",
+      "ospf",
+      "bgp",
+      "arp",
+      "spanning_tree"
+    ],
+    "visualization_formats": [
+      "ascii",
+      "graphviz",
+      "mermaid",
+      "svg",
+      "png",
+      "interactive_html"
+    ],
+    "export_formats": [
+      "json",
+      "xml",
+      "csv",
+      "graphml",
+      "visio"
+    ],
+    "analysis_features": [
+      "path_analysis",
+      "redundancy_detection",
+      "single_point_of_failure",
+      "hierarchy_detection",
+      "subnet_grouping",
+      "vlan_analysis"
+    ]
+  }
+}

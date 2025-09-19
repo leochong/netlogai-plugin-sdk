@@ -1,0 +1,156 @@
+{
+  "name": "security_plugin",
+  "display_name": "Network Security Analysis Plugin",
+  "version": "1.0.0",
+  "api_version": "1.0",
+  "type": "security",
+  "entry_point": "security_plugin.dll",
+  "author": {
+    "name": "NetLogAI Team",
+    "email": "plugins@netlogai.com",
+    "website": "https://netlogai.com"
+  },
+  "description": "Advanced security analysis plugin for threat detection, intrusion analysis, and security event correlation in network logs.",
+  "long_description": "The Security Analysis Plugin provides comprehensive security monitoring capabilities including real-time threat detection, attack pattern recognition, anomaly detection, and security event correlation. Features include brute force detection, DDoS analysis, malware communication detection, and compliance reporting for network security events.",
+  "capabilities": [
+    "log_analysis",
+    "real_time_monitoring",
+    "alerting",
+    "security_analysis",
+    "threat_detection",
+    "reporting"
+  ],
+  "supported_devices": [
+    "cisco-ios",
+    "cisco-nxos",
+    "cisco-asa",
+    "juniper-junos",
+    "palo-alto",
+    "fortinet",
+    "generic-syslog"
+  ],
+  "configuration": {
+    "schema": {
+      "type": "object",
+      "properties": {
+        "threat_severity_threshold": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10,
+          "default": 5,
+          "description": "Minimum threat severity level for alerting (1-10)"
+        },
+        "enable_real_time_detection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable real-time threat detection"
+        },
+        "brute_force_threshold": {
+          "type": "number",
+          "minimum": 3,
+          "maximum": 100,
+          "default": 10,
+          "description": "Failed login attempts before brute force alert"
+        },
+        "anomaly_detection_sensitivity": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "default": "medium",
+          "description": "Sensitivity level for anomaly detection"
+        },
+        "whitelist_ips": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "ipv4"
+          },
+          "description": "IP addresses to exclude from threat detection"
+        }
+      }
+    },
+    "defaults": {
+      "threat_severity_threshold": 5,
+      "enable_real_time_detection": true,
+      "brute_force_threshold": 10,
+      "anomaly_detection_sensitivity": "medium",
+      "whitelist_ips": []
+    },
+    "required_settings": []
+  },
+  "commands": [
+    {
+      "name": "security_scan",
+      "description": "Perform comprehensive security scan on log data",
+      "parameters": [
+        {
+          "name": "timespan",
+          "type": "string",
+          "required": false,
+          "description": "Time span for analysis (e.g., '1h', '24h', '7d')"
+        },
+        {
+          "name": "severity",
+          "type": "string",
+          "required": false,
+          "description": "Minimum severity level (low, medium, high, critical)"
+        }
+      ]
+    },
+    {
+      "name": "threat_report",
+      "description": "Generate detailed threat analysis report",
+      "parameters": [
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Report format (json, html, pdf)"
+        }
+      ]
+    },
+    {
+      "name": "update_signatures",
+      "description": "Update threat detection signatures",
+      "parameters": []
+    }
+  ],
+  "permissions": {
+    "network_access": false,
+    "file_system_access": true,
+    "system_commands": false,
+    "device_configuration": false
+  },
+  "license": "Commercial",
+  "homepage": "https://netlogai.com/plugins/security",
+  "repository": "https://github.com/netlogai/security-plugin",
+  "keywords": [
+    "security",
+    "threat-detection",
+    "intrusion-analysis",
+    "anomaly-detection",
+    "compliance",
+    "firewall",
+    "ddos"
+  ],
+  "minimum_netlogai_version": "1.0.0",
+  "resources": {
+    "memory_mb": 128,
+    "cpu_intensive": true
+  },
+  "metadata": {
+    "threat_database_version": "2024.09",
+    "supported_attack_types": [
+      "brute_force",
+      "ddos",
+      "port_scan",
+      "malware_communication",
+      "data_exfiltration",
+      "privilege_escalation"
+    ],
+    "compliance_standards": [
+      "PCI-DSS",
+      "NIST",
+      "ISO-27001"
+    ]
+  }
+}
